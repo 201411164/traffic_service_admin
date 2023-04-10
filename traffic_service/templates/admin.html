@@ -1,0 +1,117 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>관리자 페이지</h1>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">고객 추가</button>
+<hr>
+{% if users %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>사용자 이름</th>
+            <th>비밀번호</th>
+            <th>이름</th>
+            <th>전화번호</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.password }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.phone_number }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>등록된 고객이 없습니다.</p>
+{% endif %}
+<hr>
+{% if products %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>사용자 이름</th>
+            <th>상품 코드</th>
+            <th>유저 NVmid</th>
+            <th>키워드</th>
+            <th>모바일</th>
+            <th>쇼핑</th>
+            <th>그룹핑된 아이템</th>
+            <th>시작 날짜</th>
+            <th>종료 날짜</th>
+            <th>가격</th>
+            <th>오늘의 히트수</th>
+            <th>총 히트수</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.username }}</td>
+            <td>{{ product.product_code }}</td>
+            <td>{{ product.user_nvmid }}</td>
+            <td>{{ product.keyword }}</td>
+            <td>{{ product.is_mobile }}</td>
+            <td>{{ product.is_shopping }}</td>
+            <td>{{ product.is_grouped_item }}</td>
+            <td>{{ product.start_date }}</td>
+            <td>{{ product.end_date }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.today_hitcount }}</td>
+           <td>{{ product.total_hitcount }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% else %}
+<p>등록된 상품이 없습니다.</p>
+{% endif %}
+{% endblock %}
+{% block modals %}
+
+<!-- 사용자 추가 모달 -->
+<div class="modal" tabindex="-1" role="dialog" id="addUserModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">고객 추가</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="addUserForm">
+          <div class="form-group">
+            <label for="username">사용자 이름</label>
+            <input type="text" class="form-control" id="username" placeholder="사용자 이름">
+          </div>
+          <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" class="form-control" id="password" placeholder="비밀번호">
+          </div>
+          <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" class="form-control" id="name" placeholder="이름">
+          </div>
+          <div class="form-group">
+            <label for="phone_number">전화번호</label>
+            <input type="text" class="form-control" id="phone_number" placeholder="전화번호">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="addUserSubmit">추가</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

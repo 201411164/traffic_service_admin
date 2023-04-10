@@ -1,0 +1,85 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>고객 페이지</h1>
+{% if products %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>상품 코드</th>
+            <th>유저 NVmid</th>
+            <th>키워드</th>
+            <th>모바일</th>
+            <th>시작 날짜</th>
+            <th>종료 날짜</th>
+            <th>가격</th>
+            <th>오늘의 히트수</th>
+            <th>총 히트수</th>
+            <th>편집</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.product_code }}</td>
+            <td>{{ product.user_nvmid }}</td>
+            <td>{{ product.keyword }}</td>
+            <td>{{ product.is_mobile }}</td>
+            <td>{{ product.start_date }}</td>
+            <td>{{ product.end_date }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.today_hitcount }}</td>
+            <td>{{ product.total_hitcount }}</td>
+        <td>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editProductModal" data-product-id="{{ product.id }}">
+                편집
+            </button>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% else %}
+<p>등록된 상품이 없습니다.</p>
+{% endif %}
+{% endblock %}
+{% block modals %}
+
+<!-- 상품 편집 모달 -->
+<div class="modal" tabindex="-1" role="dialog" id="editProductModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">상품 편집</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editProductForm">
+                    <input type="hidden" id="editProductId">
+                    <div class="form-group">
+                        <label for="editUserNvmid">유저 NVmid</label>
+                        <input type="text" class="form-control" id="editUserNvmid" placeholder="유저 NVmid">
+                    </div>
+                    <div class="form-group">
+                        <label for="editKeyword">키워드</label>
+                        <input type="text" class="form-control" id="editKeyword" placeholder="키워드">
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="editIsMobile">
+                        <label class="form-check-label" for="editIsMobile">모바일</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="editProductSubmit">저장</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
